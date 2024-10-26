@@ -26,22 +26,17 @@ class Game:
         self.root = tk.Tk()
         self.root.title("Rock-Paper-Scissors")
         self.rps = RockPaperScissors()
-
-        # Q-Learning parameters
+        
         self.q_table = np.random.uniform(size=(3, 3))
         self.action_to_index = {'rock': 0, 'paper': 1, 'scissors': 2}
         self.alpha = 0.1
         self.gamma = 0.9
         self.epsilon = 0.1
 
-        # Scores
+        
         self.score = 0
         self.opponent_score = 0
-
-        # Auto-train the model at the start
         self.train(1000)
-
-        # Create the GUI widgets
         self.create_widgets()
 
     def train(self, episodes=100):
@@ -51,19 +46,13 @@ class Game:
             done = False
 
             while not done:
-                # Choose an action (Explore or Exploit)
                 if np.random.rand() < self.epsilon:
-                    action = random.choice(self.rps.actions)  # Explore
+                    action = random.choice(self.rps.actions)  
                 else:
-                    action = self.rps.actions[np.argmax(self.q_table[self.action_to_index[state]])]  # Exploit
-
-                # Simulate opponent's action
+                    action = self.rps.actions[np.argmax(self.q_table[self.action_to_index[state]])]  
                 opponent_action = random.choice(self.rps.actions)
-
-                # Calculate reward
                 reward = self.rps.get_reward(action, opponent_action)
 
-                # Update Q-table using Q-learning formula
                 current_q = self.q_table[self.action_to_index[state], self.action_to_index[action]]
                 max_future_q = np.max(self.q_table[self.action_to_index[opponent_action]])
                 new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)
@@ -71,7 +60,7 @@ class Game:
 
                 state = opponent_action  # Move to the next state
 
-                if np.random.rand() < 0.1:  # Random chance to end the episode
+                if np.random.rand() < 0.1:  
                     done = True
 
     def create_widgets(self):
@@ -79,8 +68,6 @@ class Game:
         tk.Button(self.root, text="Rock", command=lambda: self.play('rock')).pack(pady=5)
         tk.Button(self.root, text="Paper", command=lambda: self.play('paper')).pack(pady=5)
         tk.Button(self.root, text="Scissors", command=lambda: self.play('scissors')).pack(pady=5)
-
-        # Labels to display scores and results
         self.score_label = tk.Label(self.root, text="Your score: 0, Opponent's score: 0")
         self.score_label.pack(pady=5)
 
@@ -92,8 +79,6 @@ class Game:
         # Opponent's action based on the current Q-table
         opponent_action = self.rps.actions[np.argmax(self.q_table[self.action_to_index[action]])]
         reward = self.rps.get_reward(action, opponent_action)
-
-        # Update scores based on the reward
         if reward == 1:
             self.score += 1
             result_text = "You win this round!"
