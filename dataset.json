@@ -1,0 +1,24 @@
+[
+    {
+        "Interview_Response": "I have worked on deep learning models and implemented CNNs for image recognition.",
+        "Technical_Score": 8,
+        "Problem_Solving_Score": 9,
+        "Communication_Score": 7,
+        "Rank": 1
+    },
+    {
+        "Interview_Response": "I am familiar with machine learning and created an AI-based chatbot.",
+        "Technical_Score": 7,
+        "Problem_Solving_Score": 8,
+        "Communication_Score": 9,
+        "Rank": 2
+    },
+    {
+        "Interview_Response": "I lack experience in deep learning but have knowledge of AI concepts.",
+        "Technical_Score": 5,
+        "Problem_Solving_Score": 6,
+        "Communication_Score": 7,
+        "Rank": 3
+    }
+]
+
